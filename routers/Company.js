@@ -6,17 +6,24 @@ const { loginUser } = require('../Controllers/loginController');
 const authenticateUser = require('../middleware/auth');
 const { registerUser } = require('../Controllers/RegisterController');
 const { insertAccountInformation } = require('../Controllers/InsertAccInfo');
-const { insertBusinessInformation } = require('../Controllers/InsertBussInfo');
+const { InsertBussInfo } = require('../Controllers/InsertBussInfo');
 const { getCompanyName } = require('../Controllers/getCmpName');
 const { insertBillingInformation } = require('../Controllers/InsertBilling');
 const { final_review } = require('../Controllers/finalReview');
+const { updateCompanyDetails } = require('../Controllers/updateCmp');
 
+//get router
+router.get('/getCmpDetails', authenticateUser, getCompanyDetails); 
+router.get('/getName',authenticateUser, getCompanyName);
+
+
+//post router
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/company-details',authenticateUser, addOrUpdateCompanyDetails);
-router.get('/getCmpDetails', authenticateUser, getCompanyDetails); 
-router.post('/acc_info',authenticateUser ,insertAccountInformation);
-router.get('/getCmpName',authenticateUser, getCompanyName);
+router.post('/acc_info',authenticateUser,insertAccountInformation);
+router.post('/buss_info',authenticateUser,InsertBussInfo);
 router.post('/bill_info',authenticateUser,insertBillingInformation);
-router.get('/final_review',authenticateUser,final_review)
+router.put('/update',authenticateUser,updateCompanyDetails);
+router.get('/final_review',authenticateUser,final_review);
 module.exports = router;
